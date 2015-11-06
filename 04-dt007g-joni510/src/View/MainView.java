@@ -1,5 +1,7 @@
 package View;
 
+import java.awt.Dimension;
+
 import javax.swing.*;
 
 public class MainView {
@@ -8,7 +10,9 @@ public class MainView {
 		
 	}
 	public JFrame drawWindow(){
-			return null;
+		JFrame frame = new JFrame("Ritprogram");
+	    frame.setMinimumSize(new Dimension(500, 500));
+	    return frame;
 	}
 	public void close() {
 		// TODO Auto-generated method stub

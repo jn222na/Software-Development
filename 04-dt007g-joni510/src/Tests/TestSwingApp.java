@@ -19,7 +19,6 @@ public class TestSwingApp {
 		MainView mv = new MainView();
 		JFrame frame = mv.drawWindow();
 		assertTrue(frame.isMinimumSizeSet());
-		assertTrue(frame.isMaximumSizeSet());
 	}
 	@Test
 	public void testSystemButtons(){
@@ -27,7 +26,12 @@ public class TestSwingApp {
 		//Fullscreen / !Fullscreen
 		//Close
 	}
-
+	@Test
+	public void testTitleBar(){
+		//Move
+		//Minimize
+		//Close
+	}
 	@Test
 	public void testIfFrameOpens() {
 		

@@ -14,6 +14,20 @@ import View.MainView;
 
 public class TestSwingApp {
 
+	@Before
+	public void testIfMinSizeSet(){ 
+		MainView mv = new MainView();
+		JFrame frame = mv.drawWindow();
+		assertTrue(frame.isMinimumSizeSet());
+		assertTrue(frame.isMaximumSizeSet());
+	}
+	@Test
+	public void testSystemButtons(){
+		//Minimize
+		//Fullscreen / !Fullscreen
+		//Close
+	}
+
 	@Test
 	public void testIfFrameOpens() {
 		
@@ -22,12 +36,7 @@ public class TestSwingApp {
 			mv.close();
 	}
 
-	@Before
-	public void testIfMinSizeSet(){ 
-		MainView mv = new MainView();
-		JFrame frame = mv.drawWindow();
-		assertTrue(frame.isMinimumSizeSet());
-	}
+
 
 
 

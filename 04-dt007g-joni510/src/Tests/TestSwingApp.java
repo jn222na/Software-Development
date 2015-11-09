@@ -93,17 +93,17 @@ public class TestSwingApp {
 	
 
 
-	@Test
-	public void testSystemButtons(){
-		//Minimise
-		//Fullscreen / !Fullscreen
-		//Close
-	}
-	@Test
-	public void testTitleBar(){
-		//Move
-		//Minimise
-		//Close
-	}
+//	@Test
+//	public void testSystemButtons(){
+//		//Minimise
+//		//Fullscreen / !Fullscreen
+//		//Close
+//	}
+//	@Test
+//	public void testTitleBar(){
+//		//Move
+//		//Minimise
+//		//Close
+//	}
 
 }

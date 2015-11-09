@@ -98,22 +98,23 @@ public class TestSwingApp {
 		
 		MainView mv = new MainView();
 		ArrayList<JPanel> list = mv.panels();
+		JPanel chosenColorPanel = mv.getChosenColorPanel();
 		int botWidth = 750;
 		int botHeight = 350;
 		mv.drawWindow();
 		
 		try {
 			Robot bot = new Robot();
-			
 			assertFalse(list.isEmpty());
+			
 			for (int i = 0; i < list.size(); i++) {
 				bot.mouseMove(botWidth, botHeight);
 				bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);bot.delay(1000);
-				assertTrue(bot.getPixelColor(botWidth, botHeight).equals(list.get(i).getBackground()));
+				bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				bot.delay(250);
+				assertTrue(chosenColorPanel.getBackground().equals(list.get(i).getBackground()));
 				botWidth +=100;
-				
-			}bot.delay(2000);
+			}
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

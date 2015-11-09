@@ -3,6 +3,7 @@ package View;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Array;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -76,16 +77,15 @@ public class MainView {
 		jp5.setOpaque(true);
 		list.add(jp5);
 		
+		
 		box.setVisible(true);
 		box.addItem("Rektangel");
 		box.addItem("Frihand");
-
 		
-		mainPanel.add(jp, BorderLayout.PAGE_START);
-		mainPanel.add(jp2, BorderLayout.PAGE_START);
-		mainPanel.add(jp3, BorderLayout.PAGE_START);
-		mainPanel.add(jp4, BorderLayout.PAGE_START);
-		mainPanel.add(jp5, BorderLayout.PAGE_START);
+		for (JPanel jPanel : list) {
+			mainPanel.add(jPanel, BorderLayout.PAGE_START);
+		}
+
 		mainPanel.add(box);
 		// Needed for JComboBox to appear don't know why :/
 		box.revalidate();

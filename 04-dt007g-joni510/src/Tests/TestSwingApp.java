@@ -31,18 +31,18 @@ public class TestSwingApp {
 //			mv.close();
 	}
 	
-//	@Test
-//	public void testSystemButtons(){
-//		//Minimise
-//		//Fullscreen / !Fullscreen
-//		//Exit
-//	}
-//	@Test
-//	public void testTitleBar(){
-//		//Move
-//		//Minimise
-//		//Close
-//	}
+	@Test
+	public void testSystemButtons(){
+		//Minimise
+		//Fullscreen / !Fullscreen
+		//Exit
+	}
+	@Test
+	public void testTitleBar(){
+		//Move
+		//Minimise
+		//Close
+	}
 	@Test
 	public void testComboBox(){
 		MainView mv = new MainView();
@@ -86,10 +86,7 @@ public class TestSwingApp {
 	}
 	
 
-//	@Test
-//	public void testColorChoice(){
-//		//Colorchoice update
-//	}
+
 	
 
 

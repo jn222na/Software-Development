@@ -64,14 +64,18 @@ public class MainView {
 		jp4.setOpaque(true);
 
 		
-		
+		box.setVisible(true);
+		box.addItem("Rektangel");
+		box.addItem("Frihand");
 
 		mainPanel.add(jp, BorderLayout.PAGE_START);
 		mainPanel.add(jp2, BorderLayout.PAGE_START);
 		mainPanel.add(jp3, BorderLayout.PAGE_START);
 		mainPanel.add(jp4, BorderLayout.PAGE_START);
 		mainPanel.add(jp5, BorderLayout.PAGE_START);
-		
+		mainPanel.add(box);
+		// Needed for JComboBox to appear don't know why :/
+		box.revalidate();
 
 		return mainPanel;
 	}

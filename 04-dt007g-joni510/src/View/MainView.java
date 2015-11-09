@@ -1,17 +1,22 @@
 package View;
 
 import java.awt.*;
+
+import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+
+
 import javax.swing.*;
 
 public class MainView {
 
 	public MainView() {
 
+		
 	}
-
 	JFrame frame = new JFrame("Ritprogram");
 	JComboBox<String> box = new JComboBox<String>();
-	
+
 	public JFrame drawWindow() {
 
 		frame.setVisible(true);

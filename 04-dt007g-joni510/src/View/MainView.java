@@ -3,7 +3,9 @@ package View;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Array;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.nio.charset.MalformedInputException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -15,20 +17,27 @@ public class MainView {
 	JComboBox<String> box = new JComboBox<String>();
 	ArrayList<JPanel> list = new ArrayList<JPanel>();
 	JPanel chosenColorPanel = new JPanel();
-	
+	JLabel jlabelCoords = new JLabel();
+	JPanel mainPanel = new JPanel();
 	
 	public JFrame drawWindow() {
 
-		frame.setVisible(true);
-		frame.setMinimumSize(new Dimension(600, 500));
-		frame.setBounds(700, 250, 600, 500);
-		frame.setLayout(new BorderLayout());
-
-		JPanel jpBottom = buildBottom();
-		JPanel mainPanel = buildTopGrid();
-		frame.add(mainPanel, BorderLayout.PAGE_START);
-		frame.add(jpBottom, BorderLayout.PAGE_END);
-		addListeners(jpBottom);
+			frame.setVisible(true);
+			frame.setMinimumSize(new Dimension(600, 500));
+			frame.setBounds(700, 250, 600, 500);
+			frame.setLayout(new BorderLayout());
+			
+			JPanel jpBottom = buildBottom();
+			JPanel mainPanel = buildTopGrid();
+			frame.add(mainPanel, BorderLayout.PAGE_START);
+			frame.add(jpBottom, BorderLayout.PAGE_END);
+			
+			JPanel jpCenter = new JPanel();
+			jpCenter.setPreferredSize(new Dimension(frame.getWidth(), 0));
+			jpCenter.setLayout(new BorderLayout());
+			frame.add(jpCenter, BorderLayout.CENTER);
+			addListeners();
+			
 		return frame;
 	}
 	public JComboBox<String> jcombo(){
@@ -41,12 +50,16 @@ public class MainView {
 	public JPanel getChosenColorPanel(){
 		return chosenColorPanel;
 	}
+	
+
+	
 	private JPanel buildTopGrid() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(1, 6));
 		mainPanel.setSize(new Dimension(frame.getWidth(), 0));
 		mainPanel.setVisible(true);
-
+		
+		
 		JPanel jp = new JPanel();
 		jp.setPreferredSize(new Dimension(100, 50));
 		jp.setBackground(Color.red);
@@ -98,27 +111,30 @@ public class MainView {
 		jpBottom.setPreferredSize(new Dimension(frame.getWidth(), 30));
 		jpBottom.setBackground(Color.lightGray);
 		jpBottom.setLayout(new BorderLayout());
-
+		
+		
 		JPanel chosenColorPanelContainer = new JPanel();
 		chosenColorPanelContainer.setLayout(new BorderLayout());
 		chosenColorPanelContainer.setBackground(Color.lightGray);
-
 		
-		chosenColorPanel.setLayout(new FlowLayout());
+		
+		chosenColorPanel.setLayout(new BorderLayout());
 		chosenColorPanel.setBackground(Color.red);
 		chosenColorPanel.setPreferredSize(new Dimension(50, 0));
 		jpBottom.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-		JLabel jlabelCoords = new JLabel("Koordinater : 250, 100");
-		JLabel chosenColor = new JLabel("Färgval : ");
+		
+		jlabelCoords = new JLabel("Koordinater : ");
+		JLabel chosenColorText = new JLabel("Färgval : ");
+		
 		jpBottom.add(jlabelCoords, BorderLayout.LINE_START);
-		chosenColorPanelContainer.add(chosenColor, BorderLayout.CENTER);
+		chosenColorPanelContainer.add(chosenColorText, BorderLayout.CENTER);
 		chosenColorPanelContainer.add(chosenColorPanel, BorderLayout.LINE_END);
 		jpBottom.add(chosenColorPanelContainer, BorderLayout.EAST);
+		
 		return jpBottom;
 	}
 	
-	private void addListeners(JPanel jpBottom){
+	private void addListeners(){
 		for (JPanel jPanel : list) {
 			jPanel.addMouseListener(new MouseAdapter() {
 				 @Override
@@ -129,6 +145,8 @@ public class MainView {
 	
 		}
 	}
+	
+	
 	public void close() {
 		// frame.dispatchEvent(new WindowEvent(frame,
 		// WindowEvent.WINDOW_CLOSING));

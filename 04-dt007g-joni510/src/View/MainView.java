@@ -20,12 +20,12 @@ public class MainView {
 	JPanel chosenColorPanel = new JPanel();
 	JLabel jlabelCoords = new JLabel();
 	JPanel mainPanel = new JPanel();
-	
+	JPanel jpCenter;
 	public JFrame drawWindow() {
 
 			frame.setVisible(true);
 			frame.setMinimumSize(new Dimension(600, 500));
-			frame.setBounds(700, 250, 600, 500);
+			frame.setLocationRelativeTo(null);
 			frame.setLayout(new BorderLayout());
 			
 			JPanel jpBottom = buildBottom();
@@ -33,8 +33,9 @@ public class MainView {
 			frame.add(mainPanel, BorderLayout.PAGE_START);
 			frame.add(jpBottom, BorderLayout.PAGE_END);
 			
-			JPanel jpCenter = new JPanel();
-			jpCenter.setPreferredSize(new Dimension(frame.getWidth(), 0));
+			jpCenter = new JPanel();
+			
+			jpCenter.setSize(new Dimension(frame.getX(), frame.getY()));
 			jpCenter.setLayout(new BorderLayout());
 			frame.add(jpCenter, BorderLayout.CENTER);
 			addListeners();
@@ -51,7 +52,9 @@ public class MainView {
 	public JPanel getChosenColorPanel(){
 		return chosenColorPanel;
 	}
-	
+	public JPanel getCenterPanel(){
+		return jpCenter;
+	}
 
 	
 	private JPanel buildTopGrid() {
@@ -135,7 +138,7 @@ public class MainView {
 		return jpBottom;
 	}
 	
-	private void addListeners(){
+	public void addListeners(){
 		for (JPanel jPanel : list) {
 			jPanel.addMouseListener(new MouseAdapter() {
 				 @Override
@@ -147,7 +150,7 @@ public class MainView {
 		}
 	}
 	
-	
+
 	public void close() {
 		 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}

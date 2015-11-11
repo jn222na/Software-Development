@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
 import java.nio.charset.MalformedInputException;
 import java.util.ArrayList;
 
@@ -148,7 +149,6 @@ public class MainView {
 	
 	
 	public void close() {
-		// frame.dispatchEvent(new WindowEvent(frame,
-		// WindowEvent.WINDOW_CLOSING));
+		 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
 }

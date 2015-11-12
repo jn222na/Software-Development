@@ -12,6 +12,7 @@ import java.util.Random;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.junit.*;
@@ -21,101 +22,91 @@ import View.MainView;
 
 public class TestSwingApp {
 
-//	@Before
-//	public void testIfMinSizeSet(){ 
-//		MainView mv = new MainView();
-//		JFrame frame = mv.drawWindow();
-//		assertTrue(frame.isMinimumSizeSet());
-//		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-//		
-//	}
-//
-//
-//	
-//	@Test
-//	public void testIfFrameOpens() {
-//		
-//			MainView mv = new MainView();
-//			mv.drawWindow();
-//			mv.close();
-//	}
-//	
-//	@Test
-//	public void testSystemButtons(){
-//		//Minimise
-//		//Fullscreen / !Fullscreen
-//		//Exit
-//	}
-//	@Test
-//	public void testTitleBar(){
-//		//Move
-//		//Minimise
-//		//Close
-//	}
-//	@Test
-//	public void testComboBox() throws AWTException{
-//		MainView mv = new MainView();
-//		mv.drawWindow();
-//		JComboBox<String> box = mv.jcombo();
-//
-//			//Freehand tool
-//			
-//			Robot bot = new Robot();
-//			bot.mouseMove(1260, 350);
-//			
-//			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//			bot.delay(250);
-//			bot.mouseMove(1260, 400);
-//			bot.delay(250);
-//			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//			bot.delay(250);
-//			assertTrue(box.getSelectedItem().equals("Frihand"));
-//
-//
-//			//Rectangular tool
-//			bot.mouseMove(1260, 350);
-//			
-//			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//			bot.delay(250);
-//			bot.mouseMove(1260, 390);
-//			bot.delay(250);
-//			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//			bot.delay(250);
-//			assertTrue(box.getSelectedItem().equals("Rektangel"));
-//	}
-//	
-//	/**
-//	 * Tests that the colors we are printing out is the same as we are picking.
-//	 * @throws AWTException 
-//	 */
-//	@Test
-//	public void testColorChoice() throws AWTException{
-//		
-//		MainView mv = new MainView();
-//		ArrayList<JPanel> list = mv.panels();
-//		JPanel chosenColorPanel = mv.getChosenColorPanel();
-//		
-//		int botWidth = 750;
-//		int botHeight = 350;
-//		mv.drawWindow();
-//
-//			Robot bot = new Robot();
-//			assertFalse(list.isEmpty());
-//			
-//			for (int i = 0; i < list.size(); i++) {
-//				bot.mouseMove(botWidth, botHeight);
-//				bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//				bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//				bot.delay(250);
-//				assertTrue(chosenColorPanel.getBackground().equals(list.get(i).getBackground()));
-//				 
-//				
-//				botWidth +=100;
-//			}
-//	
-//		//Colorchoice update
-//	}
+	@Before
+	public void testIfMinSizeSet(){ 
+		MainView mv = new MainView();
+		JFrame frame = mv.drawWindow();
+		assertTrue(frame.isMinimumSizeSet());
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		
+	}
+
+
+	
+	@Test
+	public void testIfFrameOpens() {
+		
+			MainView mv = new MainView();
+			mv.drawWindow();
+			mv.close();
+	}
+	
+	@Test
+	public void testComboBox() throws AWTException{
+		MainView mv = new MainView();
+		mv.drawWindow();
+		JComboBox<String> box = mv.jcombo();
+
+			//Freehand tool
+			
+			Robot bot = new Robot();
+			bot.mouseMove(1200, 310);
+			
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			bot.delay(250);
+			bot.mouseMove(1200, 380);
+			bot.delay(250);
+			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			bot.delay(250);
+			assertTrue(box.getSelectedItem().equals("Frihand"));
+
+
+			//Rectangular tool
+			bot.mouseMove(1200, 310);
+			
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			bot.delay(250);
+			bot.mouseMove(1200, 360);
+			bot.delay(250);
+			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			bot.delay(250);
+			assertTrue(box.getSelectedItem().equals("Rektangel"));
+	}
+	
+	/**
+	 * Tests that the colors we are printing out is the same as we are picking.
+	 * @throws AWTException 
+	 */
+	@Test
+	public void testColorChoice() throws AWTException{
+		
+		MainView mv = new MainView();
+		
+		ArrayList<JPanel> list = mv.panels();
+		JPanel chosenColorPanel = mv.getChosenColorPanel();
+		
+		int botWidth = 750;
+		int botHeight = 350;
+		mv.drawWindow();
+		
+		
+			Robot bot = new Robot();
+			assertFalse(list.isEmpty());
+			
+			for (int i = 0; i < list.size(); i++) {
+				bot.mouseMove(botWidth, botHeight);
+				bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				bot.delay(250);
+				assertTrue(chosenColorPanel.getBackground().equals(list.get(i).getBackground()));
+				 
+				
+				botWidth +=100;
+			}
+	
+		//Colorchoice update
+	}
 
 	@Test
 	public void testChoords() throws AWTException{
@@ -124,28 +115,28 @@ public class TestSwingApp {
 		    
 		    
 			MainView mv = new MainView();
+			ArrayList<JPanel> list = mv.panels();
 			mv.drawWindow();
 			JPanel frame = mv.getCenterPanel();
-			
+			JLabel label = mv.getJLabelCoords();
 			int screenLocY = (int) frame.getLocationOnScreen().getY();
 		    int screenLocX = (int) frame.getLocationOnScreen().getX();
-		    frame.revalidate();
-			System.out.println(frame.getSize());
+		    System.out.println(screenLocY);
 			Robot bot = new Robot();
 			Random random = new Random();
 
-			for (int i = 1; i < 300; i+=5) {		
-		//Test draw tocome
+			for (int i = 50; i < 300; i+=5) {		
 			bot.mouseMove(screenLocX+random.nextInt(i), screenLocY+i);
-//			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			
+			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			bot.delay(20);
-				
-			}			
-	}
-
+			assertTrue(label.getText() != "Koordinater : ");
+			//Test color at position
+//			assertTrue(bot.getPixelColor(screenLocX+random.nextInt(i), screenLocY+i).equals(list.get(0).getBackground()));
+		}			
+	}	
 	
-
 
 //	@Test
 //	public void testSystemButtons(){
@@ -153,11 +144,11 @@ public class TestSwingApp {
 //		//Fullscreen / !Fullscreen
 //		//Close
 //	}
-//	@Test
-//	public void testTitleBar(){
-//		//Move
-//		//Minimise
-//		//Close
-//	}
+	@Test
+	public void testTitleBar(){
+		//New
+		//Step back
+		//Exit
+	}
 
 }

@@ -10,6 +10,7 @@ import java.nio.charset.MalformedInputException;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class MainView {
 
@@ -38,6 +39,9 @@ public class MainView {
 			jpCenter.setSize(new Dimension(frame.getX(), frame.getY()));
 			jpCenter.setLayout(new BorderLayout());
 			frame.add(jpCenter, BorderLayout.CENTER);
+			jpCenter.addMouseMotionListener(new CustomMouseMotionListener());
+			//Needed otherwise coordinates wont update if mouse is outside app when starting.
+			jpCenter.revalidate();
 			addListeners();
 			
 		return frame;
@@ -55,17 +59,19 @@ public class MainView {
 	public JPanel getCenterPanel(){
 		return jpCenter;
 	}
+	public JLabel getJLabelCoords(){
+		return jlabelCoords;
+	}
 
 	
 	private JPanel buildTopGrid() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(1, 6));
-		mainPanel.setSize(new Dimension(frame.getWidth(), 0));
+		mainPanel.setPreferredSize(new Dimension(100, 50));
 		mainPanel.setVisible(true);
 		
-		
 		JPanel jp = new JPanel();
-		jp.setPreferredSize(new Dimension(100, 50));
+		jp.setPreferredSize(new Dimension(100, 100));
 		jp.setBackground(Color.red);
 		jp.setOpaque(true);
 		list.add(jp);
@@ -106,7 +112,7 @@ public class MainView {
 		mainPanel.add(box);
 		// Needed for JComboBox to appear don't know why :/
 		box.revalidate();
-
+		
 		return mainPanel;
 	}
 	private JPanel buildBottom() {
@@ -150,7 +156,15 @@ public class MainView {
 		}
 	}
 	
+	class CustomMouseMotionListener implements MouseMotionListener {
+	      public void mouseDragged(MouseEvent e) {
+	    	  jlabelCoords.setText("Musen är intryckt");
+	      }
 
+	      public void mouseMoved(MouseEvent e) {
+	    	  jlabelCoords.setText("Koordinater : " +e.getX() +" "+ e.getY());
+	      }    
+	   }
 	public void close() {
 		 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}

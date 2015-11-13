@@ -115,26 +115,39 @@ public class TestSwingApp {
 		    
 		    
 			MainView mv = new MainView();
-			ArrayList<JPanel> list = mv.panels();
+
+			JPanel p = mv.getChosenColorPanel();
 			mv.drawWindow();
 			JPanel frame = mv.getCenterPanel();
 			JLabel label = mv.getJLabelCoords();
-			int screenLocY = (int) frame.getLocationOnScreen().getY();
-		    int screenLocX = (int) frame.getLocationOnScreen().getX();
-		    System.out.println(screenLocY);
-			Robot bot = new Robot();
-			Random random = new Random();
-
-			for (int i = 50; i < 300; i+=5) {		
-			bot.mouseMove(screenLocX+random.nextInt(i), screenLocY+i);
-			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			
-			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			bot.delay(20);
-			assertTrue(label.getText() != "Koordinater : ");
+			int screenLocY = (int) frame.getLocationOnScreen().getY();
+		    int screenLocX = (int) frame.getLocationOnScreen().getX()+100;
+
+			
+		    Robot bot = new Robot();
+			Random random = new Random();
+			int randomX = 0;
+			int randomY = 0;
+			
+			for (int i = 50; i < 350; i+=4) {	
+				 randomX = screenLocX+random.nextInt(i);
+				 randomY = screenLocY+i;
+				bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				bot.mouseMove(randomX, randomY);
+				bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				bot.delay(20);
+				assertTrue(label.getText() != "Koordinater : ");
+				System.out.println(bot.getPixelColor(randomX, randomY));
+			}		
 			//Test color at position
-//			assertTrue(bot.getPixelColor(screenLocX+random.nextInt(i), screenLocY+i).equals(list.get(0).getBackground()));
-		}			
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			bot.mouseMove(screenLocX, screenLocY);
+			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			bot.delay(1000);
+			assertTrue(bot.getPixelColor(screenLocX, screenLocY).equals(p.getBackground()));
+			
+
 	}	
 	
 

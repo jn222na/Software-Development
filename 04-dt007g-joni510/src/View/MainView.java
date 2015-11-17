@@ -3,16 +3,10 @@ package View;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 public class MainView {
 
@@ -23,7 +17,9 @@ public class MainView {
 	JLabel jlabelCoords = new JLabel();
 	JPanel mainPanel = new JPanel();
 	JPanel jpCenter;
-
+	Freehand freehand = new Freehand();
+	ColoredRectangle coloredRectangle = new ColoredRectangle();
+	
 	public JFrame drawWindow() {
 
 		frame.setVisible(true);
@@ -41,7 +37,7 @@ public class MainView {
 		jpCenter.setSize(new Dimension(frame.getX(), frame.getY() - mainPanel.getY()));
 		jpCenter.setLayout(new BorderLayout());
 		frame.add(jpCenter, BorderLayout.CENTER);
-		jpCenter.add(new CustomMouseMotionListener(), BorderLayout .CENTER);
+		jpCenter.add(new CustomMouseMotionListener(), BorderLayout.CENTER);
 
 		addListeners();
 		frame.revalidate();
@@ -163,31 +159,29 @@ public class MainView {
 	private int boxSelected(){
 		return box.getSelectedIndex();
 	}
+	
 	class CustomMouseMotionListener extends JComponent {
+
 
 		public CustomMouseMotionListener() {
 			
 	          this.addMouseListener(new MouseAdapter() {
 	        	  
 	            public void mousePressed(MouseEvent e) {
-//	            	if(boxSelected() == 0){	
 		              startDrag = new Point(e.getX(), e.getY());
 		              endDrag = startDrag;
 		              repaint();
-//	            	}
 	            	
 	            }
 	            public void mouseReleased(MouseEvent e) {
 	            if(boxSelected() == 0){	
-	              Shape r = makeRectangle(startDrag.x, startDrag.y, e.getX(), e.getY());
-	              ColoredRectangle coloredRectangle = new ColoredRectangle(chosenColorPanel.getBackground(), r);
-	              
+	              Shape rectangleShape = coloredRectangle.makeRectangle(startDrag.x, startDrag.y, e.getX(), e.getY());
+	              ColoredRectangle coloredRectangle = new ColoredRectangle(chosenColorPanel.getBackground(), rectangleShape);
 	              rectangles.add(coloredRectangle);
-	              
 	            } 
 	            if(boxSelected() == 1){
-	            	Shape f = makeLine(startDrag.x, startDrag.y, e.getX(), e.getY());
-	    			  Freehand freehand = new Freehand(chosenColorPanel.getBackground(),f);
+	            	  Shape freehandShape = freehand.makeLine(startDrag.x, startDrag.y, e.getX(), e.getY());
+	    			  Freehand freehand = new Freehand(chosenColorPanel.getBackground(),freehandShape);
 	    			  freehands.add(freehand);
 	            }
 	              startDrag = null;
@@ -202,14 +196,12 @@ public class MainView {
 			  			jlabelCoords.setText("Koordinater : " + e.getX() + " " + e.getY());
 			  		}
 	            public void mouseDragged(MouseEvent e) {
-	            	
 						endDrag = new Point(e.getX(), e.getY());
 						repaint();
-					
 	            }
 	          });
 	        }
-		
+	
 		public void paint(Graphics g) {
 				Graphics2D g2 = (Graphics2D) g;
 				
@@ -221,32 +213,18 @@ public class MainView {
 				for (Freehand freehand : freehands) {
 					g2.setPaint(freehand.getColor());
 					g2.draw(freehand.getShape());
-					
 				}
 				if(boxSelected() == 0){
 					if (startDrag != null && endDrag != null) {
-						g2.setPaint(Color.LIGHT_GRAY);
-						Shape r = makeRectangle(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
-						g2.draw(r);
+						coloredRectangle.draw(g2, startDrag.x, startDrag.y, endDrag.x, endDrag.y);
 					}
 				}
 				if(boxSelected() == 1){
 					if (startDrag != null && endDrag != null) {
-						g2.setPaint(Color.LIGHT_GRAY);
-						Shape r = makeLine(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
-						g2.draw(r);
+						freehand.draw(g2, startDrag.x, startDrag.y, endDrag.x, endDrag.y);
 					}
 				}
-		}
-				
-
-		private Rectangle2D.Float makeRectangle(int x1, int y1, int x2, int y2) {
-			return new Rectangle2D.Float(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
-		}
-		private Line2D.Float makeLine(int x, int x2, int y, int y2){
-			return new Line2D.Float( x,  x2,  y,  y2);
-		}
-		
+		}		
 	}
 
 

@@ -138,16 +138,13 @@ public class TestSwingApp {
 				bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 				bot.delay(20);
 				assertTrue(label.getText() != "Koordinater : ");
-				System.out.println(bot.getPixelColor(randomX, randomY));
 			}		
-			//Test color at position
+			//Test drawing rectangle
 			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			bot.mouseMove(screenLocX, screenLocY);
 			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			bot.delay(1000);
 			assertTrue(bot.getPixelColor(screenLocX, screenLocY).equals(p.getBackground()));
-			
-
 	}	
 	
 

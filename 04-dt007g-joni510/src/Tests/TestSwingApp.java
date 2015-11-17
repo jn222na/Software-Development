@@ -4,6 +4,7 @@ package Tests;
 import static org.junit.Assert.*;
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowEvent;
@@ -27,8 +28,7 @@ public class TestSwingApp {
 		MainView mv = new MainView();
 		JFrame frame = mv.drawWindow();
 		assertTrue(frame.isMinimumSizeSet());
-		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-		
+		dispatch(frame);
 	}
 
 
@@ -88,6 +88,7 @@ public class TestSwingApp {
 		
 		int botWidth = 750;
 		int botHeight = 350;
+
 		mv.drawWindow();
 		
 		
@@ -109,10 +110,7 @@ public class TestSwingApp {
 	}
 
 	@Test
-	public void testChoords() throws AWTException{
-		//Test if coords update 
-		//Test corners
-		    
+	public void testChoordsAndDraw() throws AWTException{
 		    
 			MainView mv = new MainView();
 
@@ -143,22 +141,55 @@ public class TestSwingApp {
 			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			bot.mouseMove(screenLocX, screenLocY);
 			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			bot.delay(1000);
-			assertTrue(bot.getPixelColor(screenLocX, screenLocY).equals(p.getBackground()));
+			bot.delay(500);
+
+			//Test drawing freehand
+			bot.mouseMove(1200, 310);
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			bot.delay(250);
+			bot.mouseMove(1200, 380);
+			bot.delay(250);
+			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			int botWidth = 750;
+			int botHeight = 350;
+			bot.mouseMove(botWidth, botHeight);
+			bot.delay(250);
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			for (int i = 50; i < 350; i+=4) {	
+				 randomX = screenLocX+125+random.nextInt(i);
+				 randomY = screenLocY+i;
+				bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				bot.mouseMove(randomX, randomY);
+				bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				bot.delay(20);
+				assertTrue(label.getText() != "Koordinater : ");
+			}		
 	}	
 	
-
-//	@Test
-//	public void testSystemButtons(){
-//		//Minimise
-//		//Fullscreen / !Fullscreen
-//		//Close
-//	}
 	@Test
 	public void testTitleBar(){
-		//New
-		//Step back
-		//Exit
-	}
+		MainView mv = new MainView();
+		JFrame frame = mv.drawWindow();
+		ArrayList<View.Rectangle> rectangles = new ArrayList<>();
+		ArrayList<View.Freehand> freehands = new ArrayList<>();
 
+		//New
+		mv.clearLists();
+		assertTrue(rectangles.isEmpty());
+		assertTrue(freehands.isEmpty());
+		mv.redraw();
+		//Step back
+		int before = rectangles.size();
+		mv.removeLastAdded();
+		int after = rectangles.size();
+		assertFalse(before == after);
+		mv.redraw();
+		dispatch(frame);
+	}
+	private void dispatch(JFrame frame){
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+	}
 }

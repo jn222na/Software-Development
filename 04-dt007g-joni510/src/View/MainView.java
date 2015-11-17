@@ -18,7 +18,7 @@ public class MainView {
 	JPanel mainPanel = new JPanel();
 	JPanel jpCenter;
 	Freehand freehand = new Freehand();
-	ColoredRectangle coloredRectangle = new ColoredRectangle();
+	Rectangle coloredRectangle = new Rectangle();
 	
 	public JFrame drawWindow() {
 
@@ -63,7 +63,12 @@ public class MainView {
 	public JLabel getJLabelCoords() {
 		return jlabelCoords;
 	}
-
+	public ArrayList<Rectangle> getRectangles(){
+		return rectangles;
+	}
+	public ArrayList<Freehand> getFreehands(){
+		return freehands;
+	}
 	private JPanel buildTopGrid() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(1, 6));
@@ -153,7 +158,7 @@ public class MainView {
 
 	int startx, starty;
 	Point endDrag, startDrag;
-	ArrayList<ColoredRectangle> rectangles = new ArrayList<>();
+	ArrayList<Rectangle> rectangles = new ArrayList<>();
 	ArrayList<Freehand> freehands = new ArrayList<>();
 	
 	private int boxSelected(){
@@ -176,7 +181,7 @@ public class MainView {
 	            public void mouseReleased(MouseEvent e) {
 	            if(boxSelected() == 0){	
 	              Shape rectangleShape = coloredRectangle.makeRectangle(startDrag.x, startDrag.y, e.getX(), e.getY());
-	              ColoredRectangle coloredRectangle = new ColoredRectangle(chosenColorPanel.getBackground(), rectangleShape);
+	              Rectangle coloredRectangle = new Rectangle(chosenColorPanel.getBackground(), rectangleShape);
 	              rectangles.add(coloredRectangle);
 	            } 
 	            if(boxSelected() == 1){
@@ -206,7 +211,7 @@ public class MainView {
 				Graphics2D g2 = (Graphics2D) g;
 				
 				
-				for (ColoredRectangle s : rectangles) {
+				for (Rectangle s : rectangles) {
 					g2.setPaint(s.getColor());
 					g2.draw(s.shape);
 				}
@@ -231,5 +236,18 @@ public class MainView {
 
 	public void close() {
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+	}
+
+	public void clearLists() {
+		
+	}
+
+	public void redraw() {
+		
+	}
+
+	public void removeLastAdded() {
+		// TODO Auto-generated method stub
+		
 	}
 }

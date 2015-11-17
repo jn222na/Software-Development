@@ -6,18 +6,18 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-public class ColoredRectangle extends Igraphs {
+public class Rectangle extends Igraphs {
 
 	Shape shape;
 	Color color;
 
-	public ColoredRectangle(Color color, Shape shape) {
+	public Rectangle(Color color, Shape shape) {
 
 		this.color = color;
 		this.shape = shape;
 	}
 
-	public ColoredRectangle() {
+	public Rectangle() {
 
 	}
 

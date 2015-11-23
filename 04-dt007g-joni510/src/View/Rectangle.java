@@ -18,7 +18,7 @@ public class Rectangle extends Igraphs {
 	}
 
 	public Rectangle() {
-
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

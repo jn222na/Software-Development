@@ -25,7 +25,7 @@ public class MainView implements ActionListener, MenuListener {
 	Rectangle coloredRectangle = new Rectangle();
 	JMenuItem stepBack = null;
 	ArrayList<Boolean> wasThisTheLastOne = new ArrayList<Boolean>();
-
+	String whichActionWasPerformed = "";
 	public JFrame drawWindow() {
 
 		frame.setVisible(true);
@@ -81,15 +81,17 @@ public class MainView implements ActionListener, MenuListener {
 	public ArrayList<Freehand> getFreehands() {
 		return freehands;
 	}
-
-	private void buildMenu() {
+	public String getwhichActionWasPerformed(){
+		return whichActionWasPerformed;
+	}
+	public void buildMenu() {
 		JMenuBar bar = new JMenuBar();
 		JMenu menu = new JMenu("Arkiv");
 		menu.addMenuListener(this);
 		bar.add(menu);
 		JMenuItem item = new JMenuItem("Nytt");
 		stepBack = new JMenuItem("Ångra");
-		JMenuItem exit = new JMenuItem("Stäng av");
+		JMenuItem exit = new JMenuItem("Stäng av"); 
 		item.addActionListener(this);
 		stepBack.addActionListener(this);
 		exit.addActionListener(this);
@@ -101,22 +103,26 @@ public class MainView implements ActionListener, MenuListener {
 
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		switch (ae.getActionCommand()) {
-
+		
 		case "Nytt":
 			jlabelCoords.setText("Nytt vald");
 			clearLists();
 			redraw();
+			whichActionWasPerformed = "Nytt";
 			break;
 		case "Ångra":
 
 			jlabelCoords.setText("Ångrade");
 			removeLastAdded();
+			whichActionWasPerformed = "Ångra";
 			break;
 		case "Stäng av":
 			jlabelCoords.setText("Avslutar");
+			whichActionWasPerformed = "Stäng av";
 			close();
 			break;
 		}

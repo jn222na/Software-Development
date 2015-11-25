@@ -1,6 +1,13 @@
 package View;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,9 +15,22 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+
+import org.omg.CORBA.Bounds;
+
+import Controller.Main;
 
 public class MainView implements ActionListener, MenuListener {
 
@@ -26,17 +46,26 @@ public class MainView implements ActionListener, MenuListener {
 	JMenuItem stepBack = null;
 	ArrayList<Boolean> wasThisTheLastOne = new ArrayList<Boolean>();
 	String whichActionWasPerformed = "";
-	public JFrame drawWindow() {
-
-		frame.setVisible(true);
-		frame.setMinimumSize(new Dimension(600, 600));
-		frame.setLocationRelativeTo(null);
-		frame.setLayout(new BorderLayout());
-
-		JPanel jpBottom = buildBottom();
-		JPanel mainPanel = buildTopGrid();
-
-		buildMenu();
+	
+	int minSizeX = 600, minSizeY = 600;
+	
+	public boolean drawWindow(int x, int y) {
+		if(x >= minSizeX && y >= minSizeY){
+			frame.setVisible(true);
+			frame.setMinimumSize(new Dimension(x, y));
+			//Position in the middle
+			frame.setLocationRelativeTo(null);
+			frame.setLayout(new BorderLayout());
+	
+			frame.revalidate();
+			return true;
+		}else{
+			return false;
+		}
+	
+	}
+	public JFrame buildWindow(JPanel jpBottom, JPanel mainPanel){
+		
 		frame.add(mainPanel, BorderLayout.PAGE_START);
 		frame.add(jpBottom, BorderLayout.PAGE_END);
 		// DISPOSE_ON_CLOSE
@@ -49,11 +78,11 @@ public class MainView implements ActionListener, MenuListener {
 		frame.add(jpCenter, BorderLayout.CENTER);
 		jpCenter.add(new CustomMouseMotionListener(), BorderLayout.CENTER);
 
-		addListeners();
+		
 		frame.revalidate();
 		return frame;
 	}
-
+//This area is for testing the app
 	public JComboBox<String> jcombo() {
 		return this.box;
 	}
@@ -84,6 +113,7 @@ public class MainView implements ActionListener, MenuListener {
 	public String getwhichActionWasPerformed(){
 		return whichActionWasPerformed;
 	}
+	//------------------------------------	
 	public void buildMenu() {
 		JMenuBar bar = new JMenuBar();
 		JMenu menu = new JMenu("Arkiv");
@@ -128,42 +158,26 @@ public class MainView implements ActionListener, MenuListener {
 		}
 	}
 
-	private JPanel buildTopGrid() {
+	public JPanel buildTopGrid() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(1, 6));
 		mainPanel.setPreferredSize(new Dimension(100, 50));
 		mainPanel.setVisible(true);
-
-		JPanel jp = new JPanel();
-		jp.setPreferredSize(new Dimension(100, 100));
-		jp.setBackground(Color.red);
-		jp.setOpaque(true);
-		list.add(jp);
-
-		JPanel jp2 = new JPanel();
-		jp2.setPreferredSize(new Dimension(100, 100));
-		jp2.setBackground(Color.green);
-		jp2.setOpaque(true);
-		list.add(jp2);
-
-		JPanel jp3 = new JPanel();
-		jp3.setPreferredSize(new Dimension(100, 100));
-		jp3.setBackground(Color.blue);
-		jp3.setOpaque(true);
-		list.add(jp3);
-
-		JPanel jp4 = new JPanel();
-		jp4.setPreferredSize(new Dimension(100, 100));
-		jp4.setBackground(Color.yellow);
-		jp4.setOpaque(true);
-		list.add(jp4);
-
-		JPanel jp5 = new JPanel();
-		jp5.setPreferredSize(new Dimension(100, 100));
-		jp5.setBackground(Color.black);
-		jp5.setOpaque(true);
-		list.add(jp5);
-
+		ArrayList<Color> colors = new ArrayList<Color>();
+		colors.add(Color.red);
+		colors.add(Color.green);
+		colors.add(Color.blue);
+		colors.add(Color.yellow);
+		colors.add(Color.black);
+		
+		for (int i = 0; i < colors.size(); i++) {
+			JPanel jPanel =new JPanel();
+			jPanel.setPreferredSize(new Dimension(100, 100));
+			
+			jPanel.setBackground(colors.get(i));
+			jPanel.setOpaque(true);
+			list.add(jPanel);
+		}
 		box.setVisible(true);
 		box.addItem("Rektangel");
 		box.addItem("Frihand");
@@ -176,7 +190,7 @@ public class MainView implements ActionListener, MenuListener {
 		return mainPanel;
 	}
 
-	private JPanel buildBottom() {
+	public JPanel buildBottom(Color bgColor, Color chosenColorPanelColor) {
 
 		JPanel jpBottom = new JPanel();
 		jpBottom.setPreferredSize(new Dimension(frame.getWidth(), 30));
@@ -185,10 +199,10 @@ public class MainView implements ActionListener, MenuListener {
 
 		JPanel chosenColorPanelContainer = new JPanel();
 		chosenColorPanelContainer.setLayout(new BorderLayout());
-		chosenColorPanelContainer.setBackground(Color.lightGray);
+		chosenColorPanelContainer.setBackground(bgColor);
 
 		chosenColorPanel.setLayout(new BorderLayout());
-		chosenColorPanel.setBackground(Color.black);
+		chosenColorPanel.setBackground(chosenColorPanelColor);
 		chosenColorPanel.setPreferredSize(new Dimension(50, 0));
 		jpBottom.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 

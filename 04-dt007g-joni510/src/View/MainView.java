@@ -28,9 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-import org.omg.CORBA.Bounds;
 
-import Controller.Main;
 
 public class MainView implements ActionListener, MenuListener {
 
@@ -46,26 +44,26 @@ public class MainView implements ActionListener, MenuListener {
 	JMenuItem stepBack = null;
 	ArrayList<Boolean> wasThisTheLastOne = new ArrayList<Boolean>();
 	String whichActionWasPerformed = "";
-	
+
 	int minSizeX = 600, minSizeY = 600;
-	
+
 	public boolean drawWindow(int x, int y) {
-		if(x >= minSizeX && y >= minSizeY){
+		if (x >= minSizeX && y >= minSizeY) {
 			frame.setVisible(true);
 			frame.setMinimumSize(new Dimension(x, y));
-			//Position in the middle
+			// Position in the middle
 			frame.setLocationRelativeTo(null);
 			frame.setLayout(new BorderLayout());
-	
+
 			frame.revalidate();
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-	
 	}
-	public JFrame buildWindow(JPanel jpBottom, JPanel mainPanel){
-		
+
+	public JFrame buildWindow(JPanel jpBottom, JPanel mainPanel) {
+
 		frame.add(mainPanel, BorderLayout.PAGE_START);
 		frame.add(jpBottom, BorderLayout.PAGE_END);
 		// DISPOSE_ON_CLOSE
@@ -75,14 +73,15 @@ public class MainView implements ActionListener, MenuListener {
 
 		jpCenter.setSize(new Dimension(frame.getX(), frame.getY() - mainPanel.getY()));
 		jpCenter.setLayout(new BorderLayout());
+		jpCenter.setBackground(Color.white);
 		frame.add(jpCenter, BorderLayout.CENTER);
 		jpCenter.add(new CustomMouseMotionListener(), BorderLayout.CENTER);
 
-		
 		frame.revalidate();
 		return frame;
 	}
-//This area is for testing the app
+
+	// This area is for testing the app
 	public JComboBox<String> jcombo() {
 		return this.box;
 	}
@@ -110,10 +109,12 @@ public class MainView implements ActionListener, MenuListener {
 	public ArrayList<Freehand> getFreehands() {
 		return freehands;
 	}
-	public String getwhichActionWasPerformed(){
+
+	public String getwhichActionWasPerformed() {
 		return whichActionWasPerformed;
 	}
-	//------------------------------------	
+
+	// ------------------------------------
 	public void buildMenu() {
 		JMenuBar bar = new JMenuBar();
 		JMenu menu = new JMenu("Arkiv");
@@ -121,7 +122,7 @@ public class MainView implements ActionListener, MenuListener {
 		bar.add(menu);
 		JMenuItem item = new JMenuItem("Nytt");
 		stepBack = new JMenuItem("Ångra");
-		JMenuItem exit = new JMenuItem("Stäng av"); 
+		JMenuItem exit = new JMenuItem("Stäng av");
 		item.addActionListener(this);
 		stepBack.addActionListener(this);
 		exit.addActionListener(this);
@@ -133,11 +134,10 @@ public class MainView implements ActionListener, MenuListener {
 
 	}
 
-	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		switch (ae.getActionCommand()) {
-		
+
 		case "Nytt":
 			jlabelCoords.setText("Nytt vald");
 			clearLists();
@@ -169,11 +169,11 @@ public class MainView implements ActionListener, MenuListener {
 		colors.add(Color.blue);
 		colors.add(Color.yellow);
 		colors.add(Color.black);
-		
+
 		for (int i = 0; i < colors.size(); i++) {
-			JPanel jPanel =new JPanel();
+			JPanel jPanel = new JPanel();
 			jPanel.setPreferredSize(new Dimension(100, 100));
-			
+
 			jPanel.setBackground(colors.get(i));
 			jPanel.setOpaque(true);
 			list.add(jPanel);
@@ -287,9 +287,9 @@ public class MainView implements ActionListener, MenuListener {
 		public void paint(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
 
-			for (Rectangle s : rectangles) {
-				g2.setPaint(s.getColor());
-				g2.draw(s.shape);
+			for (Rectangle rectangle : rectangles) {
+				g2.setPaint(rectangle.getColor());
+				g2.draw(rectangle.shape);
 			}
 			for (Freehand freehand : freehands) {
 				g2.setPaint(freehand.getColor());

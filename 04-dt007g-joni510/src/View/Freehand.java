@@ -8,43 +8,38 @@ import java.awt.geom.Line2D;
 
 public class Freehand extends Igraphs {
 
-		Shape shape;
-		Color color;
-		int x,y;
+	Shape shape;
+	Color color;
+	int x, y;
 
-		
 	public Freehand(Color color, Shape shape) {
 		this.shape = shape;
 		this.color = color;
 
 	}
+
 	public Freehand() {
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public void draw(Graphics g2, int d, double e, double f, double h) {
 		Graphics2D g = (Graphics2D) g2;
 		g.setPaint(Color.LIGHT_GRAY);
-		Shape r = makeLine(d,  e,  f, h);
+		Shape r = makeLine(d, e, f, h);
 		g.draw(r);
 	}
-	
-	public Line2D.Double makeLine(double x, double x2, double y, double y2){
-		return new Line2D.Double( x,  x2,  y,  y2);
+
+	public Line2D.Double makeLine(double x, double x2, double y, double y2) {
+		return new Line2D.Double(x, x2, y, y2);
 	}
-	
-	
+
 	public Shape getShape() {
 		return shape;
 	}
-	public void setShape(Shape shape) {
-		this.shape = shape;
-	}
+
 	public Color getColor() {
 		return color;
 	}
-	public void setColor(Color color) {
-		this.color = color;
-	}
-	
+
 }

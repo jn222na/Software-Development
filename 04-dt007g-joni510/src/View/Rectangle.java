@@ -29,24 +29,16 @@ public class Rectangle extends Igraphs {
 		g.draw(r);
 	}
 
-	Rectangle2D.Double makeRectangle(double x1, double y1, double x2, double y2) {
+	public Rectangle2D.Double makeRectangle(double x1, double y1, double x2, double y2) {
 		return new Rectangle2D.Double(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
 	}
-	
-	
+
 	public Color getColor() {
 		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
 	}
 
 	public Shape getShape() {
 		return shape;
 	}
 
-	public void setShape(Shape shape) {
-		this.shape = shape;
-	}
 }
